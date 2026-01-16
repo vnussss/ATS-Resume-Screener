@@ -1,0 +1,46 @@
+Software Engineer - Python/Django (Mid-Level)
+
+We're looking for a talented Software Engineer to join our growing team!
+
+Required Skills:
+- 3-5 years of professional Python development experience
+- Strong experience with Django or Flask frameworks
+- Proficiency in SQL databases (PostgreSQL or MySQL)
+- Experience with RESTful API design and development
+- Knowledge of Git version control
+- Understanding of AWS cloud services (EC2, S3, RDS)
+
+Nice to Have:
+- Experience with React or Vue.js for frontend development
+- Docker and Kubernetes knowledge
+- CI/CD pipeline setup (Jenkins, GitLab CI, or GitHub Actions)
+- Experience with microservices architecture
+- Knowledge of Redis or other caching solutions
+- Familiarity with GraphQL
+
+Responsibilities:
+- Design, develop, and maintain scalable web applications
+- Write clean, maintainable, and well-documented code
+- Collaborate with cross-functional teams (Product, Design, QA)
+- Participate in code reviews and provide constructive feedback
+- Troubleshoot and debug production issues
+- Contribute to technical documentation
+- Mentor junior developers
+
+Qualifications:
+- Bachelor's degree in Computer Science, Engineering, or related field
+- 3-5 years of professional software development experience
+- Strong problem-solving and analytical skills
+- Excellent communication and teamwork abilities
+- Proven track record of delivering quality software on time
+
+What We Offer:
+- Competitive salary and equity
+- Health, dental, and vision insurance
+- Flexible work hours and remote work options
+- Professional development budget
+- Modern tech stack and tools
+- Collaborative and inclusive work environment
+
+Location: Remote (US-based) or Hybrid (San Francisco office)
+Employment Type: Full-time
