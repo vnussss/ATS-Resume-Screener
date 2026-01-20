@@ -1,0 +1,31 @@
+# ATS-Resume-Screener Dependencies (Python 3.13 Compatible)
+# Python 3.10+
+
+# Core ML & NLP - Updated for Python 3.13
+spacy>=3.7.4  # Latest version with Python 3.13 support
+scikit-learn>=1.4.0
+nltk>=3.8.1
+
+# Resume Parsing
+PyPDF2>=3.0.1
+python-docx>=1.1.0
+pdfplumber>=0.10.3
+
+# UI Framework
+streamlit>=1.31.0
+streamlit-extras>=0.3.6
+
+# Data Processing - Updated for Python 3.13
+pandas>=2.2.0
+numpy>=1.26.0
+
+# Visualization
+plotly>=5.18.0
+matplotlib>=3.8.2
+
+# Utilities
+python-dateutil>=2.8.2
+tqdm>=4.66.1
+
+# Additional for Windows
+pywin32>=306; sys_platform == 'win32'
