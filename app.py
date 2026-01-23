@@ -1,6 +1,6 @@
 """
-ATS Resume Screener - ULTRA MODERN Gen Z/Gen Alpha Design
-Beautiful, clean, and professional
+ATS Resume Screener - Ultra Clean Gen Z Design
+Fast, beautiful, and functional
 """
 
 import streamlit as st
@@ -18,315 +18,223 @@ from src.ranker import ResumeRanker
 
 # Page config - MUST BE FIRST
 st.set_page_config(
-    page_title="ATS Screener 💜",
+    page_title="ATS Screener",
     page_icon="✨",
     layout="wide",
-    initial_sidebar_state="collapsed",
-    menu_items={
-        'About': "Built by a recent grad who gets the struggle 💪"
-    }
+    initial_sidebar_state="collapsed"
 )
 
-# Ultra-modern CSS with better compatibility
+# Clean, modern CSS that WORKS
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+    /* Import fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
-    /* Root variables */
-    :root {
-        --primary: #8b5cf6;
-        --secondary: #ec4899;
-        --dark: #1e1b4b;
-        --light: #f8fafc;
-        --success: #10b981;
-        --warning: #f59e0b;
-        --danger: #ef4444;
-    }
-    
-    /* Hide Streamlit branding */
+    /* Hide Streamlit elements */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Main app background - Dark mode vibes */
+    /* Global */
+    * {
+        font-family: 'Poppins', sans-serif !important;
+    }
+    
+    /* Main app background - Fresh gradient */
     .stApp {
-        background: linear-gradient(to bottom right, #1e1b4b, #312e81, #1e1b4b);
-        background-attachment: fixed;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     }
     
-    /* Main content container */
+    /* Content container - Clean white card */
     .main .block-container {
-        padding: 3rem 2rem !important;
-        max-width: 1400px;
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(20px);
+        max-width: 1200px;
+        padding: 2rem !important;
+        background: white;
         border-radius: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        margin: 2rem auto;
     }
     
-    /* Typography */
-    h1, h2, h3 {
-        font-family: 'Space Grotesk', sans-serif !important;
-        color: white !important;
-        letter-spacing: -0.02em;
-    }
-    
+    /* Headers - Purple gradient */
     h1 {
-        font-size: 3.5rem !important;
-        font-weight: 700 !important;
-        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        background: linear-gradient(135deg, #667eea, #764ba2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-weight: 800 !important;
+        font-size: 3rem !important;
         margin-bottom: 0.5rem !important;
+        letter-spacing: -0.5px;
     }
     
     h2 {
-        font-size: 2rem !important;
-        font-weight: 600 !important;
+        color: #2d3748 !important;
+        font-weight: 700 !important;
+        font-size: 1.8rem !important;
         margin-top: 2rem !important;
     }
     
     h3 {
-        font-size: 1.5rem !important;
-        font-weight: 500 !important;
+        color: #4a5568 !important;
+        font-weight: 600 !important;
+        font-size: 1.3rem !important;
     }
     
-    p, div, span, label {
-        font-family: 'Inter', sans-serif !important;
-        color: rgba(255, 255, 255, 0.9) !important;
-    }
-    
-    /* Tabs - Modern design */
-    .stTabs {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
-        padding: 0.5rem;
-    }
-    
+    /* Tabs - Modern pill style */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background: transparent;
+        gap: 12px;
+        background: #f7fafc;
+        padding: 8px;
+        border-radius: 16px;
     }
     
     .stTabs [data-baseweb="tab"] {
-        background: rgba(255, 255, 255, 0.05);
+        background: transparent;
         border-radius: 12px;
         padding: 12px 24px;
-        color: rgba(255, 255, 255, 0.6);
-        font-weight: 500;
+        color: #718096;
+        font-weight: 600;
         border: none;
-        transition: all 0.3s ease;
     }
     
     .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        background: linear-gradient(135deg, #667eea, #764ba2) !important;
         color: white !important;
-        box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
     }
     
-    /* Buttons - Glassmorphism style */
+    /* Buttons - Vibrant and clickable */
     .stButton > button {
-        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        background: linear-gradient(135deg, #667eea, #764ba2) !important;
         color: white !important;
-        border: none;
-        border-radius: 12px;
-        padding: 0.75rem 2rem;
-        font-weight: 600;
-        font-size: 1rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
-        font-family: 'Inter', sans-serif !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 0.75rem 2rem !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
     }
     
     .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.6);
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
     }
     
-    .stButton > button:active {
-        transform: translateY(0);
+    /* Metrics - Clean cards */
+    [data-testid="metric-container"] {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
     }
     
-    /* Metrics - Card style */
     [data-testid="stMetricValue"] {
-        font-size: 2.5rem !important;
-        font-weight: 700 !important;
         color: white !important;
-        font-family: 'Space Grotesk', sans-serif !important;
+        font-size: 2rem !important;
+        font-weight: 700 !important;
     }
     
     [data-testid="stMetricLabel"] {
-        color: rgba(255, 255, 255, 0.7) !important;
+        color: rgba(255,255,255,0.9) !important;
         font-weight: 500 !important;
-        font-size: 0.9rem !important;
     }
     
-    [data-testid="stMetricDelta"] {
-        color: #10b981 !important;
-    }
-    
-    /* Metric containers */
-    [data-testid="metric-container"] {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 1.5rem;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-    }
-    
-    /* Text input & textarea */
+    /* Text inputs */
     .stTextInput > div > div > input,
     .stTextArea > div > div > textarea {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 2px solid rgba(139, 92, 246, 0.3) !important;
         border-radius: 12px !important;
-        color: white !important;
-        font-family: 'Inter', sans-serif !important;
-        padding: 12px !important;
+        border: 2px solid #e2e8f0 !important;
+        font-size: 1rem !important;
     }
     
     .stTextInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus {
-        border-color: #8b5cf6 !important;
-        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+        border-color: #667eea !important;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
     }
     
     /* File uploader */
     [data-testid="stFileUploader"] {
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px dashed rgba(139, 92, 246, 0.5);
-        border-radius: 16px;
-        padding: 2rem;
-    }
-    
-    [data-testid="stFileUploader"] section {
-        border: none;
-        background: transparent;
-    }
-    
-    [data-testid="stFileUploader"] section > button {
-        background: rgba(139, 92, 246, 0.2);
-        color: white;
-        border-radius: 8px;
+        border: 2px dashed #667eea !important;
+        border-radius: 16px !important;
+        padding: 2rem !important;
+        background: #f7fafc !important;
     }
     
     /* Radio buttons */
     .stRadio > div {
-        background: rgba(255, 255, 255, 0.05);
+        background: #f7fafc;
         padding: 1rem;
         border-radius: 12px;
     }
     
-    .stRadio label {
-        color: rgba(255, 255, 255, 0.9) !important;
-    }
-    
-    /* Expander */
+    /* Expander - Card style */
     .streamlit-expanderHeader {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: white !important;
-        font-weight: 600;
+        background: #f7fafc !important;
+        border-radius: 12px !important;
+        border: 2px solid #e2e8f0 !important;
+        font-weight: 600 !important;
         padding: 1rem !important;
     }
     
     .streamlit-expanderHeader:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(139, 92, 246, 0.5);
+        border-color: #667eea !important;
+        background: #edf2f7 !important;
     }
     
-    .streamlit-expanderContent {
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 0 0 12px 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-top: none;
-    }
-    
-    /* Info/Warning/Success boxes */
+    /* Info/Success/Warning boxes */
     .stAlert {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        border-left: 4px solid #8b5cf6;
-        backdrop-filter: blur(10px);
+        border-radius: 12px !important;
+        border: none !important;
+        padding: 1rem !important;
     }
     
     /* Progress bar */
     .stProgress > div > div > div {
-        background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%);
-        border-radius: 8px;
+        background: linear-gradient(90deg, #667eea, #764ba2) !important;
     }
     
-    /* Columns */
-    [data-testid="column"] {
-        padding: 0.5rem;
-    }
-    
-    /* Custom badge styles */
-    .status-badge {
+    /* Status badges */
+    .badge {
         display: inline-block;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1.2rem;
         border-radius: 20px;
         font-weight: 600;
         font-size: 0.9rem;
         margin: 0.5rem 0;
-        letter-spacing: 0.02em;
     }
     
-    .badge-selected {
-        background: linear-gradient(135deg, #10b981, #059669);
+    .badge-success {
+        background: linear-gradient(135deg, #48bb78, #38a169);
         color: white;
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
     }
     
-    .badge-review {
-        background: linear-gradient(135deg, #f59e0b, #d97706);
+    .badge-warning {
+        background: linear-gradient(135deg, #ed8936, #dd6b20);
         color: white;
-        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        box-shadow: 0 4px 12px rgba(237, 137, 54, 0.3);
     }
     
-    .badge-rejected {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
+    .badge-danger {
+        background: linear-gradient(135deg, #f56565, #e53e3e);
         color: white;
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        box-shadow: 0 4px 12px rgba(245, 101, 101, 0.3);
     }
     
     /* Hero section */
-    .hero-subtitle {
-        font-size: 1.25rem;
-        color: rgba(255, 255, 255, 0.7);
+    .hero-text {
+        font-size: 1.2rem;
+        color: #718096;
         margin-bottom: 2rem;
         font-weight: 400;
     }
     
-    /* Dividers */
+    /* Divider */
     hr {
         border: none;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
         margin: 2rem 0;
-    }
-    
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #8b5cf6, #ec4899);
-        border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(180deg, #7c3aed, #db2777);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -337,336 +245,262 @@ if 'resumes_processed' not in st.session_state:
 if 'jd_processed' not in st.session_state:
     st.session_state.jd_processed = None
 
-# Initialize components
-@st.cache_resource
+# Initialize components with spinner
+@st.cache_resource(show_spinner=False)
 def load_components():
-    """Load all ATS components (cached)"""
-    with st.spinner("🚀 Loading AI models..."):
-        return {
-            'resume_parser': ResumeParser(),
-            'jd_parser': JDParser(),
-            'preprocessor': TextPreprocessor(),
-            'scorer': ResumeScorer(),
-            'ranker': ResumeRanker()
-        }
+    """Load all ATS components"""
+    return {
+        'resume_parser': ResumeParser(),
+        'jd_parser': JDParser(),
+        'preprocessor': TextPreprocessor(),
+        'scorer': ResumeScorer(),
+        'ranker': ResumeRanker()
+    }
 
-components = load_components()
+with st.spinner("🚀 Loading AI models... (first time takes 10-15 seconds)"):
+    components = load_components()
 
 # Hero Section
 st.markdown('<h1>✨ ATS Resume Screener</h1>', unsafe_allow_html=True)
-st.markdown(
-    '<p class="hero-subtitle">Stop losing great candidates in the pile. Let AI help you find them. 🚀</p>',
-    unsafe_allow_html=True
-)
+st.markdown('<p class="hero-text">Stop losing great candidates in the pile. Let AI help you find them. 🚀</p>', unsafe_allow_html=True)
 
 st.markdown("---")
 
-# Tab navigation with emojis
-tab1, tab2, tab3 = st.tabs([
-    "📝 Job Description",
-    "📄 Upload Resumes", 
-    "📊 Results & Rankings"
-])
+# Tabs
+tab1, tab2, tab3 = st.tabs(["📝 Job Description", "📄 Upload Resumes", "📊 Results"])
 
-# Tab 1: Job Description
+# TAB 1: Job Description
 with tab1:
-    st.markdown("## Step 1: Define Your Job Requirements")
-    st.markdown("")
+    st.markdown("## 📝 Step 1: Define Your Job")
+    st.write("")
     
     col1, col2 = st.columns([2, 1])
     
     with col1:
         jd_option = st.radio(
-            "How do you want to provide the JD?",
+            "Input method:",
             ["✍️ Paste Text", "📁 Upload File"],
-            horizontal=True,
-            label_visibility="collapsed"
+            horizontal=True
         )
         
-        st.markdown("")
+        st.write("")
         
         if jd_option == "✍️ Paste Text":
             jd_text = st.text_area(
-                "Paste Job Description",
-                height=350,
-                placeholder="📋 Paste your complete job description here...\n\nExample:\n\n🎯 Software Engineer - Python\n\nRequired:\n• 3+ years Python experience\n• Django/Flask framework\n• AWS cloud services\n• REST API development\n\nNice to have:\n• Docker & Kubernetes\n• CI/CD experience",
-                label_visibility="collapsed"
+                "Job Description:",
+                height=300,
+                placeholder="Example:\n\nSoftware Engineer - Python\n\nRequired:\n• 3+ years Python\n• Django/Flask\n• AWS experience\n• REST APIs\n\nNice to have:\n• Docker\n• Kubernetes"
             )
             
-            st.markdown("")
-            
-            if st.button("🔍 Analyze Job Description", use_container_width=True):
+            if st.button("🔍 Analyze JD"):
                 if jd_text.strip():
-                    with st.spinner("🤖 Analyzing requirements with AI..."):
-                        # Parse JD
+                    with st.spinner("Analyzing..."):
                         jd_data = components['jd_parser'].parse(jd_text)
-                        
-                        # Preprocess
                         processed = components['preprocessor'].preprocess(jd_data['text'])
                         jd_data['processed_text'] = processed['lemmatized']
                         jd_data['processed_skills'] = processed['skills']
-                        
                         st.session_state.jd_processed = jd_data
-                        st.success("✅ Job description analyzed successfully!")
+                        st.success("✅ Done!")
                         st.balloons()
                 else:
-                    st.warning("⚠️ Please paste a job description first")
-        
+                    st.warning("⚠️ Please paste a job description")
         else:
-            jd_file = st.file_uploader(
-                "Upload Job Description",
-                type=['txt'],
-                help="Upload a text file containing the job description",
-                label_visibility="collapsed"
-            )
-            
-            st.markdown("")
+            jd_file = st.file_uploader("Upload TXT file:", type=['txt'])
             
             if jd_file:
-                if st.button("🔍 Analyze Job Description", use_container_width=True):
-                    with st.spinner("🤖 Analyzing requirements with AI..."):
-                        # Read file
+                if st.button("🔍 Analyze JD"):
+                    with st.spinner("Analyzing..."):
                         jd_text = jd_file.read().decode('utf-8')
-                        
-                        # Parse JD
                         jd_data = components['jd_parser'].parse(jd_text)
-                        
-                        # Preprocess
                         processed = components['preprocessor'].preprocess(jd_data['text'])
                         jd_data['processed_text'] = processed['lemmatized']
                         jd_data['processed_skills'] = processed['skills']
-                        
                         st.session_state.jd_processed = jd_data
-                        st.success("✅ Job description analyzed successfully!")
+                        st.success("✅ Done!")
                         st.balloons()
     
     with col2:
         st.info("""
-        ### 💡 Pro Tips
+        **💡 Tips:**
         
-        **For best results:**
-        
-        ✅ Include clear requirements  
-        ✅ List must-have skills  
-        ✅ Specify experience level  
-        ✅ Mention education needs
+        ✅ List requirements  
+        ✅ Include skills  
+        ✅ Specify experience  
+        ✅ Mention education
         """)
     
-    # Show JD analysis if available
+    # Show results
     if st.session_state.jd_processed:
-        st.markdown("---")
-        st.markdown("### 📊 Analysis Results")
-        st.markdown("")
+        st.write("")
+        st.markdown("### 📊 Analysis")
         
         jd_data = st.session_state.jd_processed
         
         col1, col2, col3, col4 = st.columns(4)
-        
         with col1:
-            st.metric("📝 Word Count", f"{jd_data['word_count']:,}")
+            st.metric("Words", f"{jd_data['word_count']:,}")
         with col2:
-            st.metric("🔧 Skills Found", jd_data['total_skills_count'])
+            st.metric("Skills", jd_data['total_skills_count'])
         with col3:
-            st.metric("👔 Experience", jd_data['experience_level'].title())
+            st.metric("Level", jd_data['experience_level'].title())
         with col4:
-            qualifications = len(jd_data.get('qualifications', []))
-            st.metric("🎓 Education", f"{qualifications} items")
+            st.metric("Education", len(jd_data.get('qualifications', [])))
         
-        st.markdown("")
-        
-        # Show extracted skills
-        with st.expander("🔧 View Extracted Skills & Requirements"):
-            skills_data = jd_data['skills']
-            
-            for category, skills in skills_data.items():
+        with st.expander("🔧 Extracted Skills"):
+            for category, skills in jd_data['skills'].items():
                 if skills:
-                    st.markdown(f"**{category.title()}:**")
-                    st.write("• " + "\n• ".join(skills))
-                    st.markdown("")
+                    st.write(f"**{category.title()}:** {', '.join(skills)}")
 
-# Tab 2: Upload Resumes
+# TAB 2: Upload Resumes
 with tab2:
-    st.markdown("## Step 2: Upload Candidate Resumes")
-    st.markdown("")
+    st.markdown("## 📄 Step 2: Upload Resumes")
+    st.write("")
     
     if not st.session_state.jd_processed:
-        st.warning("⚠️ Please analyze a Job Description first (Step 1)")
+        st.warning("⚠️ Please analyze a Job Description first")
     else:
-        st.info("📤 Upload multiple resumes at once. Supported: PDF, DOCX")
-        st.markdown("")
+        st.info("📤 Upload multiple files (PDF, DOCX)")
         
         uploaded_files = st.file_uploader(
-            "Drop resume files here",
+            "Choose files:",
             type=['pdf', 'docx', 'doc'],
-            accept_multiple_files=True,
-            label_visibility="collapsed"
+            accept_multiple_files=True
         )
         
-        st.markdown("")
-        
         if uploaded_files:
-            st.success(f"✅ {len(uploaded_files)} file(s) ready to process")
-            st.markdown("")
+            st.success(f"✅ {len(uploaded_files)} file(s) ready")
             
-            if st.button("🚀 Start Processing", use_container_width=True):
-                progress_bar = st.progress(0, text="Initializing...")
+            if st.button("🚀 Process All"):
+                progress = st.progress(0)
+                status = st.empty()
                 
                 processed_resumes = []
-                total_files = len(uploaded_files)
+                total = len(uploaded_files)
                 
-                for idx, uploaded_file in enumerate(uploaded_files):
-                    progress_bar.progress(
-                        (idx + 1) / total_files,
-                        text=f"Processing {uploaded_file.name}... ({idx + 1}/{total_files})"
-                    )
+                for idx, file in enumerate(uploaded_files):
+                    status.text(f"Processing {file.name}... ({idx+1}/{total})")
+                    progress.progress((idx + 1) / total)
                     
-                    # Save temporarily
-                    temp_path = Path("data/resumes") / uploaded_file.name
+                    # Save temp
+                    temp_path = Path("data/resumes") / file.name
                     temp_path.parent.mkdir(parents=True, exist_ok=True)
-                    
                     with open(temp_path, 'wb') as f:
-                        f.write(uploaded_file.read())
+                        f.write(file.read())
                     
-                    # Parse resume
+                    # Parse
                     resume_data = components['resume_parser'].parse(str(temp_path))
                     
                     if resume_data['success']:
-                        # Preprocess
                         processed = components['preprocessor'].preprocess(resume_data['text'])
                         resume_data['processed_text'] = processed['lemmatized']
                         resume_data['skills'] = processed['skills']
                         
-                        # Score against JD
                         score_data = components['scorer'].calculate_overall_score(
                             resume_data,
                             st.session_state.jd_processed
                         )
                         
-                        # Merge data
-                        resume_result = {**resume_data, **score_data}
-                        processed_resumes.append(resume_result)
+                        processed_resumes.append({**resume_data, **score_data})
                 
-                # Rank resumes
-                ranked_resumes = components['ranker'].rank_resumes(processed_resumes)
-                st.session_state.resumes_processed = ranked_resumes
+                # Rank
+                ranked = components['ranker'].rank_resumes(processed_resumes)
+                st.session_state.resumes_processed = ranked
                 
-                progress_bar.progress(1.0, text="Complete! 🎉")
+                status.empty()
+                progress.empty()
                 
-                st.success(f"✅ Successfully processed {len(ranked_resumes)} resumes!")
+                st.success(f"✅ Processed {len(ranked)} resumes!")
                 st.balloons()
-                
-                st.info("👉 Check the **Results & Rankings** tab to see the results!")
 
-# Tab 3: Results
+# TAB 3: Results
 with tab3:
-    st.markdown("## Step 3: Review Results & Rankings")
-    st.markdown("")
+    st.markdown("## 📊 Step 3: Results")
+    st.write("")
     
     if not st.session_state.resumes_processed:
-        st.info("📊 Process some resumes first to see results here")
+        st.info("📊 Process resumes to see results")
     else:
-        ranked_resumes = st.session_state.resumes_processed
+        resumes = st.session_state.resumes_processed
         
-        # Summary metrics
-        st.markdown("### 📈 Quick Stats")
-        st.markdown("")
-        
+        # Stats
         col1, col2, col3, col4 = st.columns(4)
         
-        total = len(ranked_resumes)
-        selected = sum(1 for r in ranked_resumes if r['status'] == 'selected')
-        review = sum(1 for r in ranked_resumes if r['status'] == 'review')
-        rejected = sum(1 for r in ranked_resumes if r['status'] == 'rejected')
+        total = len(resumes)
+        selected = sum(1 for r in resumes if r['status'] == 'selected')
+        review = sum(1 for r in resumes if r['status'] == 'review')
+        rejected = sum(1 for r in resumes if r['status'] == 'rejected')
         
         with col1:
-            st.metric("📄 Total", total)
+            st.metric("Total", total)
         with col2:
-            st.metric("✅ Strong Match", selected)
+            st.metric("✅ Strong", selected)
         with col3:
             st.metric("⚠️ Review", review)
         with col4:
-            st.metric("❌ Weak Match", rejected)
+            st.metric("❌ Weak", rejected)
         
         st.markdown("---")
         
         # Rankings
-        st.markdown("### 🏆 Candidate Rankings")
-        st.markdown("")
+        st.markdown("### 🏆 Rankings")
         
-        for resume in ranked_resumes:
+        for resume in resumes:
             rank = resume['rank']
             name = resume['file_name']
             score = resume['overall_score']
             status = resume['status']
             
-            # Status badge
             if status == 'selected':
-                badge_html = '<span class="status-badge badge-selected">✅ STRONG MATCH</span>'
+                badge = '<span class="badge badge-success">✅ STRONG MATCH</span>'
                 emoji = "🌟"
             elif status == 'review':
-                badge_html = '<span class="status-badge badge-review">⚠️ REVIEW NEEDED</span>'
+                badge = '<span class="badge badge-warning">⚠️ REVIEW</span>'
                 emoji = "🤔"
             else:
-                badge_html = '<span class="status-badge badge-rejected">❌ WEAK MATCH</span>'
+                badge = '<span class="badge badge-danger">❌ WEAK</span>'
                 emoji = "📉"
             
-            with st.expander(f"#{rank} {emoji} {name} - **{score:.1f}/100**", expanded=(rank <= 2)):
-                st.markdown(badge_html, unsafe_allow_html=True)
-                st.markdown("")
+            with st.expander(f"#{rank} {emoji} {name} - {score:.1f}/100", expanded=(rank <= 2)):
+                st.markdown(badge, unsafe_allow_html=True)
+                st.write("")
                 
-                # Score breakdown
                 col1, col2 = st.columns([1, 2])
                 
                 with col1:
-                    st.metric("Overall Score", f"{score:.1f}/100")
-                    
                     breakdown = resume['breakdown']
-                    st.metric("Content Match", f"{breakdown['cosine_similarity']:.1f}%")
-                    st.metric("Skills Match", f"{breakdown['keyword_match']['match_score']:.1f}%")
+                    st.metric("Overall", f"{score:.1f}/100")
+                    st.metric("Content", f"{breakdown['cosine_similarity']:.1f}%")
+                    st.metric("Skills", f"{breakdown['keyword_match']['match_score']:.1f}%")
                     st.metric("Experience", f"{breakdown['experience_match']['experience_match_score']:.0f}%")
                 
                 with col2:
-                    # Generate explanation
                     explanation = components['ranker'].generate_explanation(resume, resume)
                     st.markdown(explanation)
         
         st.markdown("---")
         
-        # Export options
-        st.markdown("### 💾 Export Results")
-        st.markdown("")
+        # Export
+        st.markdown("### 💾 Export")
         
         col1, col2 = st.columns(2)
         
         with col1:
-            if st.button("📥 Download CSV", use_container_width=True):
-                csv_path = "data/screening_results.csv"
-                success = components['ranker'].export_to_csv(ranked_resumes, csv_path)
-                
-                if success:
-                    with open(csv_path, 'rb') as f:
-                        st.download_button(
-                            "⬇️ Click to Download",
-                            f,
-                            file_name="ats_screening_results.csv",
-                            mime="text/csv",
-                            use_container_width=True
-                        )
+            if st.button("📥 Download CSV"):
+                csv_path = "data/results.csv"
+                components['ranker'].export_to_csv(resumes, csv_path)
+                with open(csv_path, 'rb') as f:
+                    st.download_button("⬇️ Download", f, "results.csv", "text/csv")
         
         with col2:
-            if st.button("📄 Generate Report", use_container_width=True):
-                report = components['ranker'].generate_summary_report(ranked_resumes)
+            if st.button("📄 Report"):
+                report = components['ranker'].generate_summary_report(resumes)
                 st.markdown(report)
 
 # Footer
 st.markdown("---")
 st.markdown("""
-<div style='text-align: center; padding: 2rem;'>
-    <p style='color: rgba(255, 255, 255, 0.6); font-size: 1rem;'>
-        <strong>ATS Resume Screener</strong> - Built with 💜 by a recent grad who gets the struggle
-    </p>
-    <p style='color: rgba(255, 255, 255, 0.4); font-size: 0.9rem;'>
-        Powered by Python, spaCy, and determination
-    </p>
+<div style='text-align: center; color: #718096;'>
+    <p><strong>ATS Resume Screener</strong> - Built by a recent grad 💜</p>
+    <p style='font-size: 0.9rem;'>Python • spaCy • Streamlit</p>
 </div>
 """, unsafe_allow_html=True)
